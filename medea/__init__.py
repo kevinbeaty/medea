@@ -1,2 +1,2 @@
-from .mapper import JSONMapper, JSONCamelMapper
+from .mapper import MedeaMapper, MedeaCamelMapper
 from .encoder import MedeaEncoder, MedeaEncoderMixin

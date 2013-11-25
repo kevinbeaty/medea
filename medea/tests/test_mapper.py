@@ -1,22 +1,22 @@
 """
-JSONMapper test
+MedeaMapper test
 """
 from . import Person
-from ..mapper import JSONMapper
+from .. import MedeaMapper
 
 
 def test_object_args_to_json():
     bob = Person('Bob', 'Hope', '123 Main', '123', '1903-05-29')
 
-    mapper = JSONMapper('first_name', 'last_name')
+    mapper = MedeaMapper('first_name', 'last_name')
     bob_json = {
         'first_name': 'Bob',
         'last_name': 'Hope'}
 
     assert mapper.to_json(bob) == bob_json
 
-    mapper = JSONMapper('first_name', 'last_name',
-                        'address', 'phone_number', 'dob')
+    mapper = MedeaMapper('first_name', 'last_name',
+                         'address', 'phone_number', 'dob')
 
     bob_json = {
         'first_name': 'Bob',
@@ -65,9 +65,9 @@ def test_object_args_from_json():
         'phone_number': '456',
         'dob': '1928-03-20'}
 
-    mapper = JSONMapper('first_name', 'last_name')
-    mapper_full = JSONMapper('first_name', 'last_name',
-                             'address', 'phone_number', 'dob')
+    mapper = MedeaMapper('first_name', 'last_name')
+    mapper_full = MedeaMapper('first_name', 'last_name',
+                              'address', 'phone_number', 'dob')
 
     assert mapper.to_json(bob) == bob_json
     assert mapper.to_json(fred) == fred_json
@@ -119,15 +119,15 @@ def test_object_args_from_json():
 def test_object_kwargs_to_json():
     bob = Person('Bob', 'Hope', '123 Main', '123', '1903-05-29')
 
-    mapper = JSONMapper(first_name='firstName', last_name='lastName')
+    mapper = MedeaMapper(first_name='firstName', last_name='lastName')
     bob_json = {
         'firstName': 'Bob',
         'lastName': 'Hope'}
 
     assert mapper.to_json(bob) == bob_json
 
-    mapper = JSONMapper('address', 'dob',
-                        first_name='firstName', last_name='lastName')
+    mapper = MedeaMapper('address', 'dob',
+                         first_name='firstName', last_name='lastName')
 
     bob_json = {
         'firstName': 'Bob',
@@ -175,10 +175,10 @@ def test_object_kwargs_from_json():
         'phoneNumber': '456',
         'DOB': '1928-03-20'}
 
-    mapper = JSONMapper(first_name='firstName', last_name='lastName')
-    mapper_full = JSONMapper('address',
-                             first_name='firstName', last_name='lastName',
-                             phone_number='phoneNumber', dob='DOB')
+    mapper = MedeaMapper(first_name='firstName', last_name='lastName')
+    mapper_full = MedeaMapper('address',
+                              first_name='firstName', last_name='lastName',
+                              phone_number='phoneNumber', dob='DOB')
 
     assert mapper.to_json(bob) == bob_json
     assert mapper.to_json(fred) == fred_json

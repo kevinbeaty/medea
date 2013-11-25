@@ -1,12 +1,12 @@
 import json
 from . import Person
-from .. import JSONCamelMapper, MedeaEncoder, MedeaEncoderMixin
+from .. import MedeaCamelMapper, MedeaEncoder, MedeaEncoderMixin
 
 encoder = MedeaEncoder()
 
 
 class Pet(MedeaEncoderMixin):
-    __medea_mapper__ = JSONCamelMapper('name', 'kind')
+    __medea_mapper__ = MedeaCamelMapper('name', 'kind')
 
 
 class Dog(Pet):
@@ -22,7 +22,7 @@ class Cat(Pet):
 
 
 class PetPerson(Person, MedeaEncoderMixin):
-    __medea_mapper__ = JSONCamelMapper('first_name', 'last_name', 'pets')
+    __medea_mapper__ = MedeaCamelMapper('first_name', 'last_name', 'pets')
 
 
 def test_encoder_dumps():

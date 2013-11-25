@@ -1,22 +1,22 @@
 """
-JSONCamelMapper test
+MedeaCamelMapper test
 """
 from . import Person
-from ..mapper import JSONCamelMapper
+from .. import MedeaCamelMapper
 
 
 def test_object_camel_to_json():
     bob = Person('Bob', 'Hope', '123 Main', '123', '1903-05-29')
 
-    mapper = JSONCamelMapper('first_name', 'last_name')
+    mapper = MedeaCamelMapper('first_name', 'last_name')
     bob_json = {
         'firstName': 'Bob',
         'lastName': 'Hope'}
 
     assert mapper.to_json(bob) == bob_json
 
-    mapper = JSONCamelMapper('first_name', 'last_name',
-                             'address', 'phone_number', 'dob')
+    mapper = MedeaCamelMapper('first_name', 'last_name',
+                              'address', 'phone_number', 'dob')
 
     bob_json = {
         'firstName': 'Bob',
@@ -65,9 +65,9 @@ def test_object_camel_from_json():
         'phoneNumber': '456',
         'DOB': '1928-03-20'}
 
-    mapper = JSONCamelMapper('first_name', 'last_name')
-    mapper_full = JSONCamelMapper('first_name', 'last_name',
-                                  'address', 'phone_number', dob='DOB')
+    mapper = MedeaCamelMapper('first_name', 'last_name')
+    mapper_full = MedeaCamelMapper('first_name', 'last_name',
+                                   'address', 'phone_number', dob='DOB')
 
     assert mapper.to_json(bob) == bob_json
     assert mapper.to_json(fred) == fred_json

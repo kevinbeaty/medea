@@ -1,4 +1,4 @@
-""" A custom :class:`JSONEncoder` using Medea :class:`JSONMapper` """
+""" A custom :class:`JSONEncoder` using Medea :class:`MedeaMapper` """
 try:
     from flask.json import JSONEncoder
 except:
@@ -15,7 +15,7 @@ class MedeaEncoder(JSONEncoder):
 
 class MedeaEncoderMixin(object):
     """ Mixin for objects that define a :func:`to_json` function using
-    a :class:`JSONMapper` defined as `__medea_mapper__` attribute in
+    a :class:`MedeaMapper` defined as `__medea_mapper__` attribute in
     mixed in class """
     __medea_mapper__ = None
 

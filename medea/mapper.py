@@ -1,4 +1,4 @@
-class JSONMapper(object):
+class MedeaMapper(object):
     def __init__(self, *attrs, **json_attrs):
         self.attributes = set(attrs) | set(json_attrs)
         self.json_attrs = dict((attr, self.json_attr(attr)) for attr in attrs)
@@ -52,7 +52,7 @@ class JSONMapper(object):
             setattr(destination, attr, value)
 
 
-class JSONCamelMapper(JSONMapper):
+class MedeaCamelMapper(MedeaMapper):
     def json_attr(self, attr):
         cs = []
         upper = False

@@ -1,13 +1,11 @@
 """ A custom :class:`JSONEncoder` using Medea :class:`MedeaMapper` """
-try:
-    from flask.json import JSONEncoder
-except:
-    from json import JSONEncoder
+from .support import JSONEncoder, unwrap_object
 
 
 class MedeaEncoder(JSONEncoder):
     """ :class:`JSONEncoder` to handle :class:`MedeaEncoderMixin` classes """
     def default(self, obj):
+        obj = unwrap_object(obj)
         if isinstance(obj, MedeaEncoderMixin):
             return obj.to_json()
         return JSONEncoder.default(self, obj)

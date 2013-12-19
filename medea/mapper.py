@@ -1,3 +1,6 @@
+from .support import unwrap_object
+
+
 class MedeaMapper(object):
     def __init__(self, *attrs, **json_attrs):
         self.attributes = set(attrs) | set(json_attrs)
@@ -14,7 +17,10 @@ class MedeaMapper(object):
         return self._map_json(source, destination, False)
 
     def _map_json(self, source, destination, to_json):
-        destination = destination or {}
+        if destination is None:
+            destination = {}
+        source = unwrap_object(source)
+        destination = unwrap_object(destination)
 
         attributes = self.attributes
         for attr in attributes:

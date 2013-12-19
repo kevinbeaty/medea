@@ -46,7 +46,6 @@ def test_medea_mapper():
         'kind': 'Cat', 'name': 'Garfield'}
 
     anne.pets = [fido, spot, garfield]
-    print medea(anne)
     assert medea(anne) == {
         'firstName': 'Anne',
         'lastName': 'Frank',

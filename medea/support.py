@@ -3,14 +3,21 @@ try:
 except:
     from json import JSONEncoder
 
+
 try:
-    from werkzeug import LocalProxy
+    from functools import singledispatch
 except:
-    LocalProxy = ()
+    from singledispatch import singledispatch
 
-
+@singledispatch
 def unwrap_object(obj):
     """ Unwraps any known proxy object """
-    if isinstance(obj, LocalProxy):
-        obj = obj._get_current_object()
     return obj
+
+try:
+    from werkzeug import LocalProxy
+    @unwrap_object.register(LocalProxy)
+    def unwrap_proxy(obj):
+        return obj._get_current_object()
+except:
+    pass

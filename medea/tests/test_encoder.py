@@ -1,12 +1,12 @@
 import json
 from . import Person
-from .. import MedeaCamelMapper, MedeaEncoder, MedeaEncoderMixin
-
-encoder = MedeaEncoder()
+from .. import MedeaCamelMapper, MedeaEncoder, register_mapper, medea
 
 
-class Pet(MedeaEncoderMixin):
-    __medea_mapper__ = MedeaCamelMapper('name', 'kind')
+class Pet(object):
+    pass
+
+register_mapper(Pet, MedeaCamelMapper('name', 'kind'))
 
 
 class Dog(Pet):
@@ -21,8 +21,39 @@ class Cat(Pet):
         self.kind = 'Cat'
 
 
-class PetPerson(Person, MedeaEncoderMixin):
-    __medea_mapper__ = MedeaCamelMapper('first_name', 'last_name', 'pets')
+class PetPerson(Person):
+    pass
+
+register_mapper(PetPerson, MedeaCamelMapper('first_name', 'last_name', 'pets'))
+
+
+def test_medea_mapper():
+    anne = PetPerson('Anne', 'Frank')
+    assert medea(anne) == {
+        'firstName': 'Anne',
+        'lastName': 'Frank'}
+
+    fido = Dog('Fido')
+    assert medea(fido) == {
+        'kind': 'Dog', 'name': 'Fido'}
+
+    spot = Dog('Spot')
+    assert medea(spot) == {
+        'kind': 'Dog', 'name': 'Spot'}
+
+    garfield = Cat('Garfield')
+    assert medea(garfield) == {
+        'kind': 'Cat', 'name': 'Garfield'}
+
+    anne.pets = [fido, spot, garfield]
+    print medea(anne)
+    assert medea(anne) == {
+        'firstName': 'Anne',
+        'lastName': 'Frank',
+        'pets': [
+            {'kind': 'Dog', 'name': 'Fido'},
+            {'kind': 'Dog', 'name': 'Spot'},
+            {'kind': 'Cat', 'name': 'Garfield'}]}
 
 
 def test_encoder_dumps():

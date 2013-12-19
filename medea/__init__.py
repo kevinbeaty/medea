@@ -1,2 +1,2 @@
 from .mapper import MedeaMapper, MedeaCamelMapper
-from .encoder import MedeaEncoder, MedeaEncoderMixin
+from .encoder import MedeaEncoder, medea, register_mapper

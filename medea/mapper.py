@@ -1,3 +1,4 @@
+from .encoder import medea
 from .support import unwrap_object
 
 
@@ -53,6 +54,8 @@ class MedeaMapper(object):
             attr = self.json_attrs.get(attr, attr)
 
         if isinstance(destination, dict):
+            if to_json:
+                value = medea(value)
             destination[attr] = value
         else:
             setattr(destination, attr, value)

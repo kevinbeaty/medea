@@ -5,12 +5,12 @@ Medea
 Simple utilities to map JSON to and from Python Objects.
 
 MedeaMapper
-===========
+```````````
 
 Create a mapper using Python attribute names as arguments.  Attributes that are
 not whitelisted will not be serialized:
 
-::
+.. code:: python
     class Person(object):
         def __init__(self, first_name, last_name,
                      address='', phone_number='', dob=''):
@@ -37,7 +37,7 @@ not whitelisted will not be serialized:
 
 Attribute names can be overridden using `**kwargs`.
 
-::
+.. code:: python
     bob = Person('Bob', 'Hope', '123 Main', '123', '1903-05-29')
 
     mapper = MedeaMapper('address', 'dob',
@@ -53,7 +53,7 @@ Attribute names can be overridden using `**kwargs`.
 
 MedeaCamelMapper may be useful if JSON is camel cased.
 
-::
+.. code:: python
     bob = Person('Bob', 'Hope', '123 Main', '123', '1903-05-29')
 
     mapper = MedeaCamelMapper('first_name', 'last_name',
@@ -70,7 +70,7 @@ MedeaCamelMapper may be useful if JSON is camel cased.
 
 A mapper can also map attribues from JSON onto the object:
 
-::
+.. code:: python
     bob = Person('Bob', 'Hope', '123 Main', '123', '1903-05-29')
 
     bob_json_full = {
@@ -109,14 +109,14 @@ A mapper can also map attribues from JSON onto the object:
     assert mapper_full.to_json(bob) == bob_json_full
 
 MedeaEncoder
-============
+````````````
 
 A `MedeaEncoder` extends `JSONEncoder` to encode objects using a `MedeaMapper`.
 The mapper is defined as `__medea_mapper__`  on a `MedeaEncoderMixin` class.
 
 NOTE: The `MedeaEncoder` will extend the Flask encoder if installed.
 
-::
+.. code:: python
     class Pet(MedeaEncoderMixin):
         __medea_mapper__ = MedeaCamelMapper('name', 'kind')
 
@@ -151,12 +151,13 @@ NOTE: The `MedeaEncoder` will extend the Flask encoder if installed.
             {'kind': 'Dog', 'name': 'Fido'},
             {'kind': 'Dog', 'name': 'Spot'},
             {'kind': 'Cat', 'name': 'Garfield'}]}
+
 """
 from setuptools import setup
 
 setup(
     name='Medea',
-    version='0.1',
+    version='0.2',
     url='http://github.com/kevinbeaty/medea',
     license='MIT',
     author='Kevin Beaty',
@@ -169,7 +170,7 @@ setup(
     platforms='any',
     install_requires=[],
     classifiers=[
-        'Development Status :: 2 - Pre-Alpha',
+        'Development Status :: 3 - Alpha',
         'Environment :: Web Environment',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',

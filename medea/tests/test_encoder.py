@@ -1,12 +1,12 @@
 import json
 from . import Person
-from .. import MedeaCamelMapper, MedeaEncoder, register_mapper, medea
+from .. import MedeaCamelMapper, MedeaEncoder, medea
 
 
 class Pet(object):
     pass
 
-register_mapper(Pet, MedeaCamelMapper('name', 'kind'))
+medea.register(Pet, MedeaCamelMapper('name', 'kind'))
 
 
 class Dog(Pet):
@@ -24,7 +24,7 @@ class Cat(Pet):
 class PetPerson(Person):
     pass
 
-register_mapper(PetPerson, MedeaCamelMapper('first_name', 'last_name', 'pets'))
+medea.register(PetPerson, MedeaCamelMapper('first_name', 'last_name', 'pets'))
 
 
 def test_medea_mapper():

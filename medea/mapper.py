@@ -8,6 +8,9 @@ class MedeaMapper(object):
         self.json_attrs = dict((attr, self.json_attr(attr)) for attr in attrs)
         self.json_attrs.update(json_attrs)
 
+    def __call__(self, source):
+        return self.to_json(source)
+
     def json_attr(self, attr):
         return attr
 

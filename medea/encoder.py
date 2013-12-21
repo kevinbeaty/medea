@@ -17,10 +17,6 @@ def medea_list(obj):
     return map(medea, obj)
 
 
-def register_mapper(dispatch_type, mapper):
-    medea.register(dispatch_type, lambda obj: mapper.to_json(obj))
-
-
 class MedeaEncoder(JSONEncoder):
     """ :class:`JSONEncoder` delegating to medea dispatched function """
     def default(self, obj):

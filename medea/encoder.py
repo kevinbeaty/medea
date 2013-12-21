@@ -14,10 +14,13 @@ def medea(obj):
 @medea.register(list)
 @medea.register(tuple)
 def medea_list(obj):
-    return map(medea, obj)
+    return [medea(item) for item in obj]
 
 
 class MedeaEncoder(JSONEncoder):
     """ :class:`JSONEncoder` delegating to medea dispatched function """
     def default(self, obj):
-        return medea(obj)
+        encoded = medea(obj)
+        if encoded is obj:
+            return JSONEncoder.default(self, obj)
+        return encoded

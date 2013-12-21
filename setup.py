@@ -172,13 +172,13 @@ from setuptools import setup
 
 setup(
     name='Medea',
-    version='0.3',
+    version='0.3.0',
     url='http://github.com/kevinbeaty/medea',
     license='MIT',
     author='Kevin Beaty',
     author_email='kevin@simplectic.com',
     description='JSON Object Mapper / Encoder',
-    long_description=-__doc__,
+    long_description=__doc__,
     packages=['medea'],
     include_package_data=False,
     zip_safe=True,

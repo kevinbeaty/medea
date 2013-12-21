@@ -14,7 +14,7 @@ def medea(obj):
 @medea.register(list)
 @medea.register(tuple)
 def medea_list(obj):
-    return [medea(unwrap_object(item)) for item in obj]
+    return map(medea, obj)
 
 
 def register_mapper(dispatch_type, mapper):
@@ -24,4 +24,4 @@ def register_mapper(dispatch_type, mapper):
 class MedeaEncoder(JSONEncoder):
     """ :class:`JSONEncoder` delegating to medea dispatched function """
     def default(self, obj):
-        return medea(unwrap_object(obj))
+        return medea(obj)

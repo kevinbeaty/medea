@@ -6,8 +6,6 @@ from .. import MedeaCamelMapper, MedeaEncoder, medea
 class Pet(object):
     pass
 
-medea.register(Pet, MedeaCamelMapper('name', 'kind'))
-
 
 class Dog(Pet):
     def __init__(self, name):
@@ -24,7 +22,9 @@ class Cat(Pet):
 class PetPerson(Person):
     pass
 
+
 medea.register(PetPerson, MedeaCamelMapper('first_name', 'last_name', 'pets'))
+medea.register(Pet, MedeaCamelMapper('name', 'kind'))
 
 
 def test_medea_mapper():

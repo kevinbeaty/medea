@@ -1,5 +1,4 @@
 """
-
 Medea
 -----
 
@@ -13,7 +12,7 @@ MedeaMapper
 Create a mapper using Python attribute names as arguments.  Attributes that are
 not whitelisted will not be serialized:
 
-    .. code:: python
+.. code:: python
     class Person(object):
         def __init__(self, first_name, last_name,
                      address='', phone_number='', dob=''):
@@ -40,7 +39,7 @@ not whitelisted will not be serialized:
 
 Attribute names can be overridden using `**kwargs`.
 
-    .. code:: python
+.. code:: python
     bob = Person('Bob', 'Hope', '123 Main', '123', '1903-05-29')
 
     mapper = MedeaMapper('address', 'dob',
@@ -56,7 +55,7 @@ Attribute names can be overridden using `**kwargs`.
 
 MedeaCamelMapper may be useful if JSON is camel cased.
 
-    .. code:: python
+.. code:: python
     bob = Person('Bob', 'Hope', '123 Main', '123', '1903-05-29')
 
     mapper = MedeaCamelMapper('first_name', 'last_name',
@@ -73,7 +72,7 @@ MedeaCamelMapper may be useful if JSON is camel cased.
 
 A mapper can also map attribues from JSON onto the object:
 
-    .. code:: python
+.. code:: python
     bob = Person('Bob', 'Hope', '123 Main', '123', '1903-05-29')
 
     bob_json_full = {
@@ -114,10 +113,11 @@ A mapper can also map attribues from JSON onto the object:
 
 medea
 `````
+
 `medea` is a singledispatch function for JSON encoding. Custom objects can be
 registered with a mapper.
 
-    .. code:: python
+.. code:: python
     class Pet(object):
         pass
 
@@ -158,13 +158,12 @@ registered with a mapper.
 MedeaEncoder
 ````````````
 `MedeaEncoder` is a `JSONEncoder` using the `medea` function.
-NOTE: The flask encoder will be subclassed if installed.
 
 
-unwrap_object
-`````````````
-`unwrap_object` is a singledispatch function to unwrap proxies.  If the
-werkzeug `LocalProxy` used, it will be unwrapped.
+Flask
+`````
+Medea has an optional dependency on Flask. The flask JSON encoder will
+be subclassed if installed and any werkzeug `LocalProxy` will be unwrapped.
 
 """
 

@@ -162,7 +162,7 @@ assert medea(anne) == {
 NOTE: The flask encoder will be subclassed if installed.
 
 
-### unwrap_object
+## Flask
 
-`unwrap_object` is a singledispatch function to unwrap proxies.  If the
-werkzeug `LocalProxy` used, it will be unwrapped.
+Medea has an optional dependency on Flask. The flask JSON encoder will
+be subclassed if installed and any werkzeug `LocalProxy` will be unwrapped.

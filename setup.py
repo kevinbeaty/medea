@@ -4,7 +4,60 @@ Medea
 
 Simple utilities to map JSON to and from Python Objects.
 
-.. image:: https://secure.travis-ci.org/kevinbeaty/medea.png
+medea
+`````
+
+`medea` is a singledispatch function for JSON encoding. Custom objects can be
+registered with a mapper.
+
+.. code:: python
+    class Pet(object):
+        pass
+
+
+    class Dog(Pet):
+        def __init__(self, name):
+            self.name = name
+            self.kind = 'Dog'
+
+
+    class Cat(Pet):
+        def __init__(self, name):
+            self.name = name
+            self.kind = 'Cat'
+
+
+    class PetPerson(Person):
+        pass
+
+
+    medea.register(PetPerson, MedeaCamelMapper('first_name', 'last_name', 'pets'))
+    medea.register(Pet, MedeaCamelMapper('name', 'kind'))
+
+    anne = PetPerson('Anne', 'Frank')
+    fido = Dog('Fido')
+    spot = Dog('Spot')
+    garfield = Cat('Garfield')
+    anne.pets = [fido, spot, garfield]
+    assert medea(anne) == {
+        'firstName': 'Anne',
+        'lastName': 'Frank',
+        'pets': [
+            {'kind': 'Dog', 'name': 'Fido'},
+            {'kind': 'Dog', 'name': 'Spot'},
+            {'kind': 'Cat', 'name': 'Garfield'}]}
+
+
+MedeaEncoder
+````````````
+`MedeaEncoder` is a `JSONEncoder` using the `medea` function.
+
+
+Flask
+`````
+Medea has an optional dependency on Flask. The flask JSON encoder will
+be subclassed if installed and any werkzeug `LocalProxy` will be unwrapped.
+
 
 MedeaMapper
 ```````````
@@ -110,68 +163,13 @@ A mapper can also map attribues from JSON onto the object:
     assert mapper.to_json(bob) == bob_json
     assert mapper_full.to_json(bob) == bob_json_full
 
-
-medea
-`````
-
-`medea` is a singledispatch function for JSON encoding. Custom objects can be
-registered with a mapper.
-
-.. code:: python
-    class Pet(object):
-        pass
-
-
-    class Dog(Pet):
-        def __init__(self, name):
-            self.name = name
-            self.kind = 'Dog'
-
-
-    class Cat(Pet):
-        def __init__(self, name):
-            self.name = name
-            self.kind = 'Cat'
-
-
-    class PetPerson(Person):
-        pass
-
-
-    medea.register(PetPerson, MedeaCamelMapper('first_name', 'last_name', 'pets'))
-    medea.register(Pet, MedeaCamelMapper('name', 'kind'))
-
-    anne = PetPerson('Anne', 'Frank')
-    fido = Dog('Fido')
-    spot = Dog('Spot')
-    garfield = Cat('Garfield')
-    anne.pets = [fido, spot, garfield]
-    assert medea(anne) == {
-        'firstName': 'Anne',
-        'lastName': 'Frank',
-        'pets': [
-            {'kind': 'Dog', 'name': 'Fido'},
-            {'kind': 'Dog', 'name': 'Spot'},
-            {'kind': 'Cat', 'name': 'Garfield'}]}
-
-
-MedeaEncoder
-````````````
-`MedeaEncoder` is a `JSONEncoder` using the `medea` function.
-
-
-Flask
-`````
-Medea has an optional dependency on Flask. The flask JSON encoder will
-be subclassed if installed and any werkzeug `LocalProxy` will be unwrapped.
-
 """
 
 from setuptools import setup
 
 setup(
     name='Medea',
-    version='0.3.0',
+    version='0.3.1',
     url='http://github.com/kevinbeaty/medea',
     license='MIT',
     author='Kevin Beaty',

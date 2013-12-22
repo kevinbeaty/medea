@@ -1,5 +1,4 @@
 from .encoder import medea
-from .support import unwrap_object
 
 
 class MedeaMapper(object):
@@ -15,53 +14,35 @@ class MedeaMapper(object):
         return attr
 
     def to_json(self, source):
-        return self._map_json(source, None, True)
-
-    def from_json(self, source, destination=None):
-        return self._map_json(source, destination, False)
-
-    def _map_json(self, source, destination, to_json):
-        if destination is None:
-            destination = {}
-        source = unwrap_object(source)
-        destination = unwrap_object(destination)
-
-        attributes = self.attributes
-        for attr in attributes:
-            if self._hasattr(source, attr, to_json):
-                value = self._getattr(source, attr, to_json)
-                self._setattr(destination, attr, value, to_json)
+        destination = {}
+        for attr in self.attributes:
+            if hasattr(source, attr):
+                value = getattr(source, attr)
+                dest_attr = self.json_attrs.get(attr, attr)
+                destination[dest_attr] = medea(value)
 
         return destination
 
-    def _hasattr(self, source, attr, to_json):
-        if not to_json:
-            attr = self.json_attrs.get(attr, attr)
+    def from_json(self, source, destination):
+        attributes = self.attributes
+        for attr in attributes:
+            source_attr = self.json_attrs.get(attr, attr)
+            if source_attr in source:
+                value = source[source_attr]
+                setattr(destination, attr, value)
 
-        if isinstance(source, dict):
-            return attr in source
+        return destination
 
-        return hasattr(source, attr)
+    def pick(self, source):
+        destination = {}
 
-    def _getattr(self, source, attr, to_json):
-        if not to_json:
-            attr = self.json_attrs.get(attr, attr)
-
-        if isinstance(source, dict):
-            return source[attr]
-
-        return getattr(source, attr)
-
-    def _setattr(self, destination, attr, value, to_json):
-        if to_json:
-            attr = self.json_attrs.get(attr, attr)
-
-        if isinstance(destination, dict):
-            if to_json:
-                value = medea(value)
-            destination[attr] = value
-        else:
-            setattr(destination, attr, value)
+        attributes = self.attributes
+        for attr in attributes:
+            source_attr = self.json_attrs.get(attr, attr)
+            if source_attr in source:
+                value = source[source_attr]
+                destination[attr] = value
+        return destination
 
 
 class MedeaCamelMapper(MedeaMapper):

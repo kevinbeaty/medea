@@ -1,10 +1,14 @@
+=====
 Medea
------
+=====
 
 Simple utilities to map JSON to and from Python Objects.
 
+.. image:: https://travis-ci.org/kevinbeaty/medea.png?branch=master 
+        :target: https://travis-ci.org/kevinbeaty/medea
+
 medea
-`````
+=====
 
 `medea` is a singledispatch function for JSON encoding. 
 
@@ -13,6 +17,7 @@ Items and values of dicts are recursively dispatched.
 Other types should be registered with dispatch function.
 
 .. code-block:: python
+
     medea.register(date, lambda obj: obj.strftime('%Y-%m-%d'))
 
     dob = date(1974, 3, 1)
@@ -34,6 +39,7 @@ Other types should be registered with dispatch function.
 Custom objects can be registered with a mapper:
 
 .. code-block:: python
+
     class Pet(object):
         pass
 
@@ -72,17 +78,19 @@ Custom objects can be registered with a mapper:
 
 
 MedeaEncoder
-````````````
+============
+
 `MedeaEncoder` is a `JSONEncoder` using the `medea` function.
 
 
 MedeaMapper
-```````````
+===========
 
 Create a mapper using Python attribute names as arguments.  Attributes that are
 not whitelisted will not be serialized:
 
 .. code-block:: python
+
     class Person(object):
         def __init__(self, first_name, last_name,
                      address='', phone_number='', dob=''):
@@ -110,6 +118,7 @@ not whitelisted will not be serialized:
 Attribute names can be overridden using `**kwargs`.
 
 .. code-block:: python
+
     bob = Person('Bob', 'Hope', '123 Main', '123', '1903-05-29')
 
     mapper = MedeaMapper('address', 'dob',
@@ -126,6 +135,7 @@ Attribute names can be overridden using `**kwargs`.
 MedeaCamelMapper may be useful if JSON is camel cased.
 
 .. code-block:: python
+
     bob = Person('Bob', 'Hope', '123 Main', '123', '1903-05-29')
 
     mapper = MedeaCamelMapper('first_name', 'last_name',
@@ -143,6 +153,7 @@ MedeaCamelMapper may be useful if JSON is camel cased.
 A mapper can also map attribues from JSON onto the object:
 
 .. code-block:: python
+
     bob = Person('Bob', 'Hope', '123 Main', '123', '1903-05-29')
 
     bob_json_full = {
@@ -179,3 +190,4 @@ A mapper can also map attribues from JSON onto the object:
     mapper.from_json(bob_json, bob)
     assert mapper.to_json(bob) == bob_json
     assert mapper_full.to_json(bob) == bob_json_full
+

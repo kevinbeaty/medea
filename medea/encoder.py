@@ -11,8 +11,14 @@ def medea(obj):
 
 @medea.register(list)
 @medea.register(tuple)
+@medea.register(set)
 def medea_list(obj):
     return [medea(item) for item in obj]
+
+
+@medea.register(dict)
+def medea_dict(obj):
+    return dict((key, medea(obj[key])) for key in obj)
 
 
 class MedeaEncoder(JSONEncoder):

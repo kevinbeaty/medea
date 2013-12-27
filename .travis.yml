@@ -6,11 +6,7 @@ python:
   - "3.2"
   - "3.3"
 
-env:
-    - REQUIREMENTS=bare
-    - REQUIREMENTS=flask
-
 install:
-    - pip install -r .travis-$REQUIREMENTS-requirements.txt --use-mirrors
+    - pip install -e .
 
 script: nosetests

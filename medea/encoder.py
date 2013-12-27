@@ -1,14 +1,6 @@
 """ A custom :class:`JSONEncoder` using Medea :class:`MedeaMapper` """
-try:
-    from flask.json import JSONEncoder
-except:
-    from json import JSONEncoder
-
-
-try:
-    from functools import singledispatch
-except:
-    from singledispatch import singledispatch
+from json import JSONEncoder
+from singledispatch import singledispatch
 
 
 @singledispatch
@@ -21,16 +13,6 @@ def medea(obj):
 @medea.register(tuple)
 def medea_list(obj):
     return [medea(item) for item in obj]
-
-try:
-    from werkzeug import LocalProxy
-
-    @medea.register(LocalProxy)
-    def unwrap_proxy(obj):
-        return medea(obj._get_current_object())
-
-except:
-    pass
 
 
 class MedeaEncoder(JSONEncoder):
